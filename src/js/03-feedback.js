@@ -6,12 +6,17 @@ form.addEventListener('submit', onSubmitForm);
 
 const formData = {};
 
+
 function onFormData(e) {
-    formData[e.target.name] = e.target.value;
+    formData[e.target.name] = e.target.value.trim();
     localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 }
 
 function onSubmitForm(e) {
+    if (!form.querySelector('input').value.trim() && !form.querySelector('textarea').value.trim()) {
+        alert('Please fill out the form');
+        return;
+    }
     console.log(JSON.parse(localStorage.getItem('feedback-form-state')));
     e.preventDefault();
     e.currentTarget.reset();
@@ -23,7 +28,7 @@ function onSubmitForm(e) {
     const email = document.querySelector('.feedback-form input');
     const message = document.querySelector('.feedback-form textarea');
     if (data) {
-        email.value = data.email;
-        message.value = data.message;
+        email.value = data.email.trim();
+        message.value = data.message.trim();
     }
 })();
